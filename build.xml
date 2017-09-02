@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+              
+<project basedir="." default="build" name="JRelStarVis">
+    <property environment="env"/>    
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    
+    <property name="JDK1.8_dir"  location="/usr/local/Java/jdk1.8.0_91" />
+    <property name="javac1.8"    location="${JDK1.8_dir}/bin/javac" />
+    <property name="java1.8"     location="${JDK1.8_dir}/bin/java" />    
+    <property name="jogamp_dir"  location="/home/tmueller/local/java_libs/jogamp/2.2.4/" />
+    <property name="jogamp_native" value="linux-amd64" />    
+    
+    <path id="jogamp-2.2.4.userclasspath">
+        <pathelement location="${jogamp_dir}/jar/gluegen.jar"/>
+        <pathelement location="${jogamp_dir}/jar/jogl-all.jar"/>
+    </path>
+    
+    <path id="JRelStarVis.classpath">
+        <pathelement location="bin"/>
+        <path refid="jogamp-2.2.4.userclasspath"/>
+    </path>
+    
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac executable="${javac1.8}" debug="true" debuglevel="${debuglevel}" destdir="bin" 
+            includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="JRelStarVis.classpath"/>
+        </javac>
+    </target>
+    
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    
+    <target name="JRelStarFlight">
+        <java classname="tauzero7.java.relavis.relstar.JRelStarFlight" dir="." failonerror="true" fork="yes">
+            <classpath refid="JRelStarVis.classpath"/>
+        </java>
+    </target>
+    
+    <target name="jar" depends="build-project" description="Generate jar file">
+        <mkdir dir="lib" />
+        <jar jarfile="JRelStarFlight.jar">
+            <manifest>
+                <attribute name="Built-By"   value="Thomas Mueller" />
+                <attribute name="Main-Class" value="tauzero7.java.relavis.relstar.JRelStarFlight" />
+                <attribute name="Class-Path" value="lib/gluegen-rt.jar lib/jogl-all.jar" />
+            </manifest>
+            <fileset dir="bin" includes="**/*.class" />
+        </jar>
+        <copy todir="lib">
+            <fileset dir="${jogamp_dir}/jar">
+                <include name="gluegen-rt.jar" />
+                <include name="jogl-all.jar" />
+                <include name="gluegen-rt-natives-${jogamp_native}.jar" />
+                <include name="jogl-all-natives-${jogamp_native}.jar" />
+                <include name="gluegen-rt-natives-windows-amd64.jar"/>
+                <include name="jogl-all-natives-windows-amd64.jar"/>
+            </fileset>
+        </copy>
+    </target>
+</project>
