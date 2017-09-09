@@ -251,7 +251,7 @@ public class GLRenderer implements GLEventListener {
                 System.err.println("psitemp size is wrong!");
                 System.exit(1);
             }
-            byteSize = tex_width * tex_height * num * Float.SIZE;
+            byteSize = tex_width * tex_height * num * Float.BYTES;
             array = new byte[byteSize];
             in.read(array, 0, byteSize);
         } catch (IOException e) {
@@ -312,7 +312,7 @@ public class GLRenderer implements GLEventListener {
             System.err.printf("Load %s ... %d x %d x %d\n",
                     Defs.BIN_NAME_SIGMA, tex_width, tex_height, num);
 
-            byteSize = tex_width * tex_height * num * Float.SIZE;
+            byteSize = tex_width * tex_height * num * Float.BYTES;
             array = new byte[byteSize];
             in.read(array, 0, byteSize);
         } catch (IOException e) {
@@ -372,7 +372,7 @@ public class GLRenderer implements GLEventListener {
             System.err.printf("Load %s ... %d x %d x %d\n", Defs.BIN_NAME_WARP,
                     tex_width, tex_height, num);
 
-            byteSize = tex_width * tex_height * num * Float.SIZE;
+            byteSize = tex_width * tex_height * num * Float.BYTES;
             array = new byte[byteSize];
             in.read(array, 0, byteSize);
         } catch (IOException e) {
@@ -442,7 +442,7 @@ public class GLRenderer implements GLEventListener {
     private void createVBO(GL gl) {
         gl.glGenBuffers(1, mVBO, 0);
         gl.glBindBuffer(GL.GL_ARRAY_BUFFER, mVBO[0]);
-        gl.glBufferData(GL.GL_ARRAY_BUFFER, mVertices.capacity() * Float.SIZE,
+        gl.glBufferData(GL.GL_ARRAY_BUFFER, mVertices.capacity() * Float.BYTES,
                 mVertices, GL.GL_STATIC_DRAW);
         gl.glBindBuffer(GL.GL_ARRAY_BUFFER, 0);
     }
