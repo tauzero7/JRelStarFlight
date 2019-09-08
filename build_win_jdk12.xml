@@ -11,17 +11,16 @@
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
     
-    <property name="JDK_dir"  location="/usr/local/Java/jdk1.8.0_91" />
+    <property name="JDK_dir"  location="C:/Program Files/Java/jdk-12.0.1" />
     <property name="javac"    location="${JDK_dir}/bin/javac" />
     <property name="java"     location="${JDK_dir}/bin/java" />    
-    <property name="jogamp_dir"  location="E:/local/java_libs/jogamp/2.2.4/" />
+    <property name="jogamp_dir"  location="E:/workspace/java_libs/jogamp/2.2.4/" />
     <property name="jogamp_native" value="linux-amd64" />    
     
     <path id="jogamp-2.2.4.userclasspath">
         <pathelement location="${jogamp_dir}/jar/gluegen.jar"/>
         <pathelement location="${jogamp_dir}/jar/jogl-all.jar"/>
     </path>
-    
     <path id="JRelStarVis.classpath">
         <pathelement location="bin"/>
         <path refid="jogamp-2.2.4.userclasspath"/>
@@ -40,7 +39,6 @@
     <target name="clean">
         <delete dir="bin"/>
     </target>
-    
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
     <target name="build-subprojects"/>
