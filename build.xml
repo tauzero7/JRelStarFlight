@@ -15,6 +15,7 @@
     <property name="javac"    location="${JDK_dir}/bin/javac" />
     <property name="java"     location="${JDK_dir}/bin/java" />    
     <property name="jogamp_dir"  location="/home/tmueller/local/java_libs/jogamp/2.2.4/" />
+
     <property name="jogamp_native" value="linux-amd64" />    
     
     <path id="jogamp-2.2.4.userclasspath">
