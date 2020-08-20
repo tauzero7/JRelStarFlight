@@ -11,9 +11,9 @@
     <property name="target" value="1.8"/>
     <property name="source" value="1.8"/>
     
-    <property name="JDK1.8_dir"  location="/usr/local/Java/jdk1.8.0_91" />
-    <property name="javac1.8"    location="${JDK1.8_dir}/bin/javac" />
-    <property name="java1.8"     location="${JDK1.8_dir}/bin/java" />    
+    <property name="JDK_dir"  location="/usr/local/Java/jdk" />
+    <property name="javac"    location="${JDK_dir}/bin/javac" />
+    <property name="java"     location="${JDK_dir}/bin/java" />    
     <property name="jogamp_dir"  location="/home/tmueller/local/java_libs/jogamp/2.2.4/" />
     <property name="jogamp_native" value="linux-amd64" />    
     
@@ -47,7 +47,7 @@
     
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac executable="${javac1.8}" debug="true" debuglevel="${debuglevel}" destdir="bin" 
+        <javac executable="${javac}" debug="true" debuglevel="${debuglevel}" destdir="bin" 
             includeantruntime="false" source="${source}" target="${target}">
             <src path="src"/>
             <classpath refid="JRelStarVis.classpath"/>
